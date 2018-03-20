@@ -1,9 +1,18 @@
 import React, { Component } from "react";
-import { Text } from "react-native";
-
+import { View } from "react-native";
+import { NavigationActions } from "react-navigation";
 import styled from "styled-components";
 
+import { deletePlant } from "../../store/plants";
 import PlantDetailsScreen from "./PlantDetailsScreen";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+
+const Wrapper = styled.View`
+  display: flex;
+  flex: 1;
+  background-color: #fff;
+`;
 
 class PlantDetailsScreenContainer extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -14,27 +23,39 @@ class PlantDetailsScreenContainer extends Component {
       headerTitleStyle: {
         fontFamily: "Open Sans"
       },
-      headerStyle: {
-        backgroundColor: "white",
-        borderBottomWidth: 0,
-        paddingTop: 30,
-        paddingBottom: 10
-      },
-      headerTitleStyle: {
-        fontFamily: "Open Sans",
-        fontSize: 15,
-        fontWeight: "bold"
-      },
+      gesturesEnabled: true
     };
+  };
+
+  deletePlant = id => {
+    const { deletePlant, navigation } = this.props;
+    deletePlant(id);
+
+    navigation.dispatch(NavigationActions.back());
   };
 
   render() {
     const { params } = this.props.navigation.state;
-    const name = params ? params.name : null;
+    const { name, id } = params;
+    const plant = this.props.plants.find(plant => plant.id === id);
+
+    if (!plant) {
+      return <Wrapper />;
+    }
     return (
-      <PlantDetailsScreen name={name} />
+      <PlantDetailsScreen
+        plant={plant}
+        name={name}
+        onDelete={this.deletePlant}
+      />
     );
   }
 }
 
-export default PlantDetailsScreenContainer;
+const mapStateToProps = state => ({
+  plants: state.plants
+});
+
+export default connect(mapStateToProps, { deletePlant })(
+  PlantDetailsScreenContainer
+);

@@ -1,4 +1,19 @@
-import { AppRegistry } from 'react-native';
-import App from './App';
+import React from "react";
+import { AppRegistry } from "react-native";
+import { Provider } from "react-redux";
+import store, { persistor } from "./store";
 
-AppRegistry.registerComponent('plants', () => App);
+import { PersistGate } from "redux-persist/integration/react";
+import AppNavigation from "./App";
+import { Text } from "react-native";
+import LoadingSpinner from "./components/shared/LoadingSpinner";
+
+const Root = () => (
+  <Provider store={store}>
+    <PersistGate loading={<LoadingSpinner />} persistor={persistor}>
+      <AppNavigation />
+    </PersistGate>
+  </Provider>
+);
+
+AppRegistry.registerComponent("plants", () => Root);

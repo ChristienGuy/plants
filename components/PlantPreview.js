@@ -1,5 +1,8 @@
 import React from "react";
+import { NavigationActions } from "react-navigation";
 import { Image, TouchableOpacity, View, Text } from "react-native";
+
+import routes from "../navigation/routes";
 
 import styled from "styled-components";
 import icon from "../plant-icon.png";
@@ -9,9 +12,9 @@ const ImageContainer = styled.View`
   height: 120px;
   background-color: #d1edca;
 
-  border-radius: 100px;
-  border-width: 1px;
-  border-color: #004905;
+  border-radius: 60px;
+  /* border-width: 1px; */
+  /* border-color: #004905; */
   margin-bottom: 10px;
   overflow: hidden;
 
@@ -30,20 +33,20 @@ const Wrapper = styled.TouchableOpacity`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
-  margin-bottom: 50px;
 `;
 
 const Name = styled.Text`
   font-family: "Open Sans";
 `;
 
-export const PlantPreview = ({ plant, navigation }) => (
+export const PlantPreview = ({ plant, navigation, style }) => (
   <Wrapper
+    style={style}
     onPress={() => {
-      navigation.navigate("Details", {
-        ...plant
-      });
+      navigation.dispatch(NavigationActions.navigate({
+        routeName: routes.DETAILS,
+        params: { ...plant }
+      }));
     }}
   >
     <ImageContainer>

@@ -4,30 +4,44 @@
  * @flow
  */
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Button } from "react-native";
+import { BackHandler } from "react-native";
+import { connect } from "react-redux";
+import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
+import { addNavigationHelpers, NavigationActions } from "react-navigation";
 
-import HomeScreenContainer from "./components/home/HomeScreenContainer";
-import PlantDetailsScreenContainer from "./components/plant-details/PlantDetailsScreenContainer";
+import { RootStackNavigator } from "./navigation/rootStackNavigator";
 
-import { StackNavigator } from "react-navigation";
-
-type Props = {};
-const RootStack = StackNavigator(
-  {
-    Home: {
-      screen: HomeScreenContainer
-    },
-    Details: {
-      screen: PlantDetailsScreenContainer
-    }
-  },
-  {
-    initialRouteName: "Home"
+export const addListener = createReduxBoundAddListener("root");
+class AppNavigation extends Component {
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
-);
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
 
-export default class App extends Component {
+  onBackPress = () => {
+    const { dispatch, navigation } = this.props;
+    if (navigation.index === 0) {
+      return false;
+    }
+    dispatch(NavigationActions.back());
+    return true;
+  };
+
   render() {
-    return <RootStack />;
+    const { dispatch, navigation } = this.props;
+    const navigationProp = addNavigationHelpers({
+      dispatch: this.props.dispatch,
+      state: this.props.navigation,
+      addListener
+    });
+    return <RootStackNavigator navigation={navigationProp} />;
   }
 }
+
+const mapStateToProps = state => ({
+  navigation: state.navigation
+});
+
+export default connect(mapStateToProps)(AppNavigation);
