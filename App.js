@@ -8,6 +8,7 @@ import { BackHandler, PushNotificationIOS } from "react-native";
 import { connect } from "react-redux";
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 import { addNavigationHelpers, NavigationActions } from "react-navigation";
+import routes from "./navigation/routes";
 
 import { RootStackNavigator } from "./navigation/rootStackNavigator";
 import PushNotification from "react-native-push-notification";
@@ -19,18 +20,22 @@ class AppNavigation extends Component<Props> {
 
     PushNotification.configure({
       onNotification: notification => {
+        this.props.dispatch(
+          NavigationActions.navigate({
+            routeName: routes.DETAILS,
+            params: {
+              ...notification.userInfo.plant
+            }
+          })
+        );
         console.log("====================================");
-        console.log("Notification:", notification);
+        console.log(notification);
         console.log("====================================");
         notification.finish(PushNotificationIOS.FetchResult.NoData);
       }
     });
-
-    PushNotification.localNotificationSchedule({
-      message: "Test notification",
-      date: new Date(Date.now() + 10 * 1000)
-    });
   }
+
   componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
