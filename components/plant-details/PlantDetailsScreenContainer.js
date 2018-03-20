@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from "react";
 import { View } from "react-native";
 import { NavigationActions } from "react-navigation";
@@ -14,7 +15,7 @@ const Wrapper = styled.View`
   background-color: #fff;
 `;
 
-class PlantDetailsScreenContainer extends Component {
+class PlantDetailsScreenContainer extends Component<Props> {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
 

@@ -1,8 +1,9 @@
+// @flow
 import React from "react";
-import { Text, Button } from "react-native";
+import { Text, Button, Switch } from "react-native";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
+import { format, distanceInWords, differenceInCalendarDays } from "date-fns";
 const Wrapper = styled.View`
   display: flex;
   flex: 1;
@@ -13,17 +14,32 @@ const Wrapper = styled.View`
 `;
 
 const PlantDetailsScreen = ({ plant, onDelete }) => {
-  const { name } = plant;
+  const { name, lastWatered, daysBetweenWater } = plant;
+
+  const daysAgoWatered = differenceInCalendarDays(Date.now(), lastWatered);
+  const waterPercentage = Math.round(
+    (daysBetweenWater - daysAgoWatered) / daysBetweenWater * 100
+  );
+
   return (
     <Wrapper>
-      <Text>Details Screen</Text>
       <Text>{name}</Text>
+      <Text>
+        Last watered:{" "}
+        {distanceInWords(Date.now(), lastWatered, { addSuffix: true })} ({format(
+          lastWatered,
+          "MM-DD-YY"
+        )})
+      </Text>
+      <Text>{daysBetweenWater}</Text>
+      <Text>{waterPercentage}</Text>
       <Button
         title="Delete"
         onPress={() => {
           onDelete(plant.id);
         }}
       />
+      <Switch />
     </Wrapper>
   );
 };

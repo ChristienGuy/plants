@@ -4,17 +4,32 @@
  * @flow
  */
 import React, { Component } from "react";
-import { BackHandler } from "react-native";
+import { BackHandler, PushNotificationIOS } from "react-native";
 import { connect } from "react-redux";
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 import { addNavigationHelpers, NavigationActions } from "react-navigation";
 
 import { RootStackNavigator } from "./navigation/rootStackNavigator";
-
+import PushNotification from "react-native-push-notification";
 export const addListener = createReduxBoundAddListener("root");
-class AppNavigation extends Component {
+
+class AppNavigation extends Component<Props> {
   componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+
+    PushNotification.configure({
+      onNotification: notification => {
+        console.log("====================================");
+        console.log("Notification:", notification);
+        console.log("====================================");
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+      }
+    });
+
+    PushNotification.localNotificationSchedule({
+      message: "Test notification",
+      date: new Date(Date.now() + 10 * 1000)
+    });
   }
   componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);

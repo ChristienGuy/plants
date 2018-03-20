@@ -45,7 +45,7 @@ class DateInput extends Component {
       datePickerState: DatePickerStates.CLOSED,
       fieldState: FieldStates.DIRTY
     });
-    this.props.onChangeDate();
+    this.props.onChangeDate(chosenDate);
   };
 
   render() {
