@@ -20,12 +20,12 @@ class AppNavigation extends Component<Props> {
 
     PushNotification.configure({
       onNotification: notification => {
+
+        const params = notification.userInfo ? notification.userInfo.plant : notification.data.plant;
         this.props.dispatch(
           NavigationActions.navigate({
             routeName: routes.DETAILS,
-            params: {
-              ...notification.userInfo.plant
-            }
+            params
           })
         );
         console.log("====================================");
