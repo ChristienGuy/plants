@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { View, TextInput, Button } from "react-native";
-import DateInput from "../shared/DateInput"
+import { View, TextInput } from "react-native";
+import DateInput from "../shared/DateInput";
 import styled from "styled-components";
+
+import Button from "../shared/Button";
 
 const InputLabel = styled.Text`
   margin-bottom: 10px;

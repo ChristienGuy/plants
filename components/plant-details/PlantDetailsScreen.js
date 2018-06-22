@@ -1,9 +1,12 @@
 // @flow
 import React from "react";
-import { Text, Button, Switch } from "react-native";
+import { Text, Switch } from "react-native";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { format, distanceInWords, differenceInCalendarDays } from "date-fns";
+
+import Button from "../shared/Button";
+
 const Wrapper = styled.View`
   display: flex;
   flex: 1;
@@ -35,6 +38,7 @@ const PlantDetailsScreen = ({ plant, onDelete }) => {
       <Text>{waterPercentage}</Text>
       <Button
         title="Delete"
+        variant="danger"
         onPress={() => {
           onDelete(plant.id);
         }}
