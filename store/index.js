@@ -1,7 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import navReducer, { navMiddleware } from "./navigation";
 import plantsReducer from "./plants"
-// import storage from "redux-persist/lib/storage"
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"
 
@@ -22,7 +21,8 @@ const store: Store<any> = createStore(
   persistedReducer,
   compose(
     applyMiddleware(navMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // compose expects a method, if __REDUX_DEVTOOLS_EXTENSION__ returns false then this returns a boolean not a method
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : null
   )
 );
 
