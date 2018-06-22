@@ -19,12 +19,10 @@ export default (reducer = (state = initialState, action = {}) => {
     case ADD: {
       const newState = [...state, action.plant];
       return newState;
-      break;
     }
     case DELETE: {
       const newState = state.filter(plant => plant.id !== action.id);
       return newState;
-      break;
     }
     default:
       return state;
