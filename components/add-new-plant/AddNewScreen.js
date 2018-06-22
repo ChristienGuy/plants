@@ -1,12 +1,4 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  DatePickerAndroid
-} from "react-native";
 import styled from "styled-components";
 
 // Custom Component imports
