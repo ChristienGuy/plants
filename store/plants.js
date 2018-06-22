@@ -3,14 +3,16 @@ import v4 from "uuid/v4";
 import PushNotification from "react-native-push-notification";
 
 type Plant = {
+  uuid: string,
   name: string,
   lastWatered: Date,
-  daysBetweenWater: number
+  daysBetweenWater: number,
+  notifications: boolean
 };
 
 // Actions
-const ADD = "plants-app/plants/ADD";
-const DELETE = "plants-app/plants/DELETE";
+const ADD = "Sprout/plants/ADD";
+const DELETE = "Sprout/plants/DELETE";
 
 // Reducer
 initialState = [];
