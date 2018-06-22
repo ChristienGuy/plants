@@ -22,13 +22,4 @@ const AddNewScreen = ({ addPlant }) => {
   );
 };
 
-const InputLabel = styled.Text`
-  margin-bottom: 10px;
-`;
-
-const InputWrapper = styled.View`
-  margin-bottom: 30px;
-`;
-
-
 export default AddNewScreen;

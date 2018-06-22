@@ -1,4 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { View, TextInput, Button } from "react-native";
+import DateInput from "../shared/DateInput"
+import styled from "styled-components";
+
+const InputLabel = styled.Text`
+  margin-bottom: 10px;
+`;
+
+const InputWrapper = styled.View`
+  margin-bottom: 30px;
+`;
 
 class AddPlantForm extends Component<Props> {
   state = {
